@@ -93,7 +93,6 @@ def tile_img(image_path, output_folder,tile_size=800, overlap=200, output_widget
 
     return output_folder
 
-
 ##
 tile_size = 1024
 overlap = 0

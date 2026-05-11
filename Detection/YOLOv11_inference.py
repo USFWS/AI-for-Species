@@ -12,17 +12,17 @@ import os
 
 # root_dir = "D:/species_2025/12_species_detection/f_model_results/test_parent_images/"
 
-root_dir = "E:/JPG_20260121_081600_45k/"
+root_dir = "C:/BP/species/annot/img"
 file_type = "jpg"
 
-new_csv = "C:/users/aware/desktop/081600_YOLO.csv"
-# visual_path = "D:/species_2025/7_detection/detect_all_parents_366/"
+new_csv = "C:/BP/species/annot/newbee.csv"
+visual_path = "C:/BP/species/annot/newbee/viz"
 
 #new_csv = "D:/species_2025/12_species_detection/8_inference/survey_095400_yolo10x_conf_20.csv"
-model_path= "C:/users/aware/desktop/species_prep/model_weights/species_detector_yolo11s_Aug3.pt"
+model_path= "C:/BP/species/MODEL_WEIGHTS/species_detector_yolo11s_Aug3.pt"
 
 
-device = "cuda:2" if torch.cuda.is_available() else "cpu"
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(f"Using {device} device")
 
 #if not os.path.exists(visual_path):
@@ -60,8 +60,8 @@ for root, dirs, files in os.walk(root_dir):
             )
             object_prediction_list = result.object_prediction_list
             base = os.path.basename(file)
-      #      result.export_visuals(file_name=base, export_dir= visual_path,
-      #             hide_labels=False, hide_conf=False, rect_th=3)
+            result.export_visuals(file_name=base, export_dir= visual_path,
+                   hide_labels=False, hide_conf=False, rect_th=3)
 
             with open(new_csv, 'a', newline='') as file:
                 writer = csv.writer(file)

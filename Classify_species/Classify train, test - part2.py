@@ -35,9 +35,8 @@ class2index = {"Accipitridae": 0, "Anatidae": 1, "Ardeidae": 2,
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
-                            "SACR": 13, "species": 14, "ROSP": 15
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile": 16
                             }
-
 # load model
 model = torch.jit.load(model_path)
 model.to(device)
@@ -55,7 +54,7 @@ class CustomDataset(torch.utils.data.Dataset):  ## used for custom data loading
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
-                            "SACR": 13, "species": 14, "ROSP": 15
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile": 16
                             }
     def __len__(self):
         return len(self.annotations)

@@ -4,21 +4,24 @@ from pycocotools.coco import COCO
 from pascal_voc_writer import Writer
 import os
 
-os.chdir("C:/BP/whcr/")
+os.chdir("C:/users/bpickens/OneDrive - DOI/species_OneDrive/detection/")
 
-# Inputs: csv_file= input of csv with annotation data;
+# Inputs:
+# csv_file= input of csv with annotation data;
 # export_json= name of COCO json to export
+# output_dir = dir for voc annotations
 # width = width of images (pixels), height = height of images (pixels)
 # categories = link the name of classes related to its index
-csv_file = 'new_test_annot.csv'
-export_json = 'annot_tester2.json'
+csv_file = 'annot_add_to_train2.csv'
+export_json = 'new_annot2.json'
+output_dir = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/detection/voc_parents/"
 width = 6464
 height = 4848
 
 csv_data = pd.read_csv(csv_file)
 
 categories = [
-    {"id": 0, "name": "whcr"}]
+    {"id": 0, "name": "species"}]
 
 #csv_data.columns = (['id','image_id','unique_image_jpg','xmin', 'ymin', 'w','h','label_id'])
 #csv_data['label_id']= csv_data['label_id'].astype(int)
@@ -36,7 +39,7 @@ image_id1 = pd.unique(csv_data['unique_image_jpg'])
 csv_data['image_id'], unique_labels = csv_data['unique_image_jpg'].factorize()
 csv_data['image_id']= csv_data['image_id'].astype(int)
 csv_data['id']= csv_data['id'].astype(int)
-#pd.DataFrame.to_csv(csv_data, path_or_buf= "C:/BP/whcr/tester.csv")
+#pd.DataFrame.to_csv(csv_data, path_or_buf= "C:/BP/species/tester.csv")
 csv_data['annid'] = csv_data.index
 
 # Create lists to fill in, including nested dictionaries
@@ -87,7 +90,6 @@ json.dump(data_coco, open(export_json,"w"), indent=0)
 print ("Completed!")
 
 ##########
-###
 
 def coco2voc(ann_file, output_dir):
     coco = COCO(ann_file)
@@ -119,5 +121,5 @@ def coco2voc(ann_file, output_dir):
                 basename = os.path.basename(label_fname)
                 print("basename:", basename)
                 writer.save(output_dir+'/'+ basename)
-output_dir = 'C:/BP/whcr/parent_voc/'
+
 coco2voc(ann_file=export_json, output_dir= output_dir)
