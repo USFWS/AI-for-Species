@@ -27,17 +27,16 @@ model.to(device)
 
 time_start = time.time()
 
-idx_to_label = {0: "BWTE", 1: "CANV", 2: "COGO", 3: "grebe",
-        4: "raptor", 5: "RBME", 6: "AGWT",
-        7: "AMAV", 8: "AMWI", 9: "artificial",
-        10: "AWPE", 11: "BRPE", 12: "BUFF", 13: "CANG",
-        14: "Cormorant", 15: "GADW", 16: "gull",
-        17: "MALL", 18: "NOPI", 19: "NSHO", 20: "REDH", 21: "ROSP",
-        22: "SACR", 23: "SCAU", 24: "shorebird",
-        25: "SNGO", 26: "tern", 27: "unlisted_object",
-        28: "wading_bird", 29: "WHIB", 30: "white_egret",
-        31: "WHCR_adult", 32: "WHCR_juvenile"
-        }
+idx_to_label = {0: "Accipitridae", 1: "Anatidae", 2: "Ardeidae",
+                            3: "artificial", 4: "Charadriiformes",
+                            5: "Laridae", 6: "Pelecanidae",
+                            7: "Phalacrocoracidae", 8: "Podicipedidae",
+                            9: "Skimmer",
+                            10: "Sterninae",
+                            11: "Threskiornithidae", 12: "Unlisted_object",
+                            13: "SACR", "species": 14, "ROSP": 15
+                            }
+
 unlisted_object_index = 9
 species_list = list(idx_to_label.values())
 print(species_list)
