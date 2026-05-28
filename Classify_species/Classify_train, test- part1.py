@@ -21,9 +21,9 @@ if device:
     print(torch.cuda.get_device_name())
 
 # Inputs
-csv_train = "D:/species_2025/11_species_2025_CLASSIFICATION/DATASETS_classify_species/species_train_dataset_rd4_Dec4.csv"
-csv_test = "D:/species_2025/11_species_2025_CLASSIFICATION/DATASETS_classify_species/species_test_dataset_rd4_Dec4.csv"
-image_folder = "D:/species_2025/11_species_2025_CLASSIFICATION/DATASETS_classify_species/model_all_crops/"
+csv_train = "D:/species_2025/n_.csv"
+csv_test = "D:/species_2025/"
+image_folder = "D:/species_2025//"
 
 import Classification_utils
 from Classification_utils import train_MBC, test_MBC
@@ -52,7 +52,7 @@ class CustomTrain(torch.utils.data.Dataset):  ## used for custom data loading
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
-                            "SACR": 13, "species": 14, "ROSP": 15
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile":16
                             }
     def __len__(self):
         return len(self.annotations)
@@ -82,7 +82,7 @@ class CustomDataset(torch.utils.data.Dataset):  ## used for custom data loading
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
-                            "SACR": 13, "species": 14, "ROSP": 15
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile":16
                             }
 
     def __len__(self):
@@ -118,6 +118,7 @@ for count in class_counts:
 
 class_weights = torch.FloatTensor(class_weights)
 class_weights[14] = class_weights[14]*10
+class_weights[16] = class_weights[16]*10
 class_weights = class_weights.to(device)
 print("species weight: ", class_weights[14])
 

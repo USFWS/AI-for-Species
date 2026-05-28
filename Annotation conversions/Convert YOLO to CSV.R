@@ -11,19 +11,19 @@ library (plyr)
 # those are not needed for yolo implementation
 
 # Enter your directory
-setwd(file.path('D:', 'SACR_models', 'SACR_FIX', 'dataset_June4',
+setwd(file.path('C:', 'BP', 'species', 'DATASET_2025_species_DETECT_v4',
                 'val', 'labels'))
 
 # Enter the name of csv to export
-export_csv = "export_train_June5.csv"
+export_csv = "val_dataset_detect_v4.csv"
 
 # Parent image dimensions
-parent_width = 736
-parent_height = 736
+parent_width = 6464
+parent_height = 4852
 
 # Optional: class index to class name
 ## Add more classes as needed
-label_name0 = "sandhill_crane"
+label_name0 = "species"
 
 ## List files in folder 
 file_list <- list.files() # uses setwd 

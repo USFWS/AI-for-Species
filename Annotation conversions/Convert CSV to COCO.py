@@ -23,15 +23,23 @@ categories = [{"label_id": 0, "name": "species"}]
 
 #csv_data.columns = (['id','image_id','unique_image_jpg','xmin', 'ymin', 'w','h','label_id'])
 
-#csv_data['image_id']= csv_data['image_id'].astype(int)
-#csv_data['id']= csv_data['id'].astype(int)
-#csv_data['xmin']= csv_data['xmin'].astype(int)
-#csv_data['ymin']= csv_data['ymin'].astype(int)
-#csv_data['w']= csv_data['w'].astype(int)
-#csv_data['h']= csv_data['h'].astype(int)
-#csv_data['label_id']= csv_data['h'].astype(int)
- #                    'bbname','unique_image_path'])
 csv_data['annid'] = csv_data.index
+
+len1 = len(csv_data)
+print(len1)
+
+# create id for each label
+id_list1 = []
+for i in range(len1):
+    id_list1.append(i)
+csv_data['id'] = id_list1
+
+# finds all unique images and maps to integer
+image_id1 = pd.unique(csv_data['unique_image_jpg'])
+csv_data['image_id'], unique_labels = csv_data['unique_image_jpg'].factorize()
+csv_data['image_id']= csv_data['image_id'].astype(int)
+
+csv_data['id']= csv_data['id'].astype(int)
 
 # Create lists to fill in, including nested dictionaries
 images = []
@@ -45,7 +53,6 @@ def image(row):
     image["file_name"] = row.unique_image_jpg
   # image["observer"] = row.author # if needed
     return image
-
 def annotation(row):
     annotation = {}
     annotation["id"] = row.id

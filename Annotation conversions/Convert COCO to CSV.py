@@ -7,9 +7,9 @@ import json
 # The output csv will not contain images without annotations; to obtain those, please check the output of
 # "...names_toCSV" file
 
-working_dir = "D:/data_2025/"
-filename = "one_image.json"
-final_csv = "one_image.csv"
+working_dir = "C:/BP/species/"
+filename = "new_test_annot.json"
+final_csv = "reversed.csv"
 
 # Set working directory
 os.chdir(working_dir)

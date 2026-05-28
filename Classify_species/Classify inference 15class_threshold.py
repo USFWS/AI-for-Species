@@ -61,7 +61,8 @@ idx_to_label = {0: "Accipitridae", 1: "Anatidae", 2: "Ardeidae",
                             9: "Skimmer",
                             10: "Sterninae",
                             11: "Threskiornithidae", 12: "Unlisted_object",
-                            13: "SACR", 14: "species", 15: "ROSP"
+                            13: "SACR", "species_adult": 14, "ROSP": 15,
+                            "species_juvenile": 16
                             }
 
 species_list = list(idx_to_label.values())

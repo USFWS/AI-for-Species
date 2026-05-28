@@ -4,14 +4,17 @@ import os
 
 ##Input: image_path = dir with parent images; csv_data = detection csv from inference
 # export_path_[bird/nonbird/artif] = specify folders for each class
-image_path = "E:/JPG_20260130_094500_part1/"
-csv_data = pandas.read_csv("C:/users/aware/desktop/species_results/YOLO_20260130_094500_part1.csv")
+image_path = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/FINAL_species_PARENTS_377/"
+
+#csv_data = pandas.read_csv("C:/users/bpickens/OneDrive - DOI/species_OneDrive/2025_known_species_individuals.csv")
+
+csv_data = pandas.read_csv("C:/users/bpickens/OneDrive - DOI/species_OneDrive/new_annot1.csv")
 
 # crops with context exports
-export_context_bird = "C:/Users/aware/Desktop/species_results/context_crops_birds2/"
+export_context_bird = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/crops_context_2025/"
 
 # crops for inference
-export_infer_bird = "C:/Users/aware/Desktop/species_results/inference_crops_birds2/"
+export_infer_bird = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/crops_small_2025/"
 
 if not os.path.exists(export_context_bird):
     os.mkdir(export_infer_bird)
@@ -64,7 +67,7 @@ for index, row in matches.iterrows():  ## iterrows: Pandas iterate over rows
     # (x, y starting points), (x,y end points)
     cv.rectangle(temp1, (xmin_box, ymin_box), (xmax_box, ymax_box), (0, 255, 0))
     crops = temp1[y:(y + h), x:(x + w)]
-    name = export_context_bird + row['unique_BB'] + ".jpg"
+    name = export_context_bird + row['unique_BB'] # + ".jpg"
     print ("dest1", name)
     cv.imwrite(name, crops, [int(cv.IMWRITE_JPEG_QUALITY), 95])
 
@@ -88,7 +91,7 @@ for index, row in matches.iterrows():  ## iterrows: Pandas iterate over rows
 
     # Specify each class name below (cat1, cat2, etc.)
     crops = temp2[y:(y + h), x:(x + w)]
-    name2 = row['unique_BB'] + ".jpg"
+    name2 = row['unique_BB'] # + ".jpg"
     print("dest2", name2)
     cv.imwrite(export_infer_bird + name2 , crops, [int(cv.IMWRITE_JPEG_QUALITY), 95])
 

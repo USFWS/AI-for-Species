@@ -9,8 +9,11 @@ import os
 # Inputs
 ## ann_file = COCO annotation json
 ## output_dir = directory for output PASCAL Voc annotations
-ann_file = "D:/2025/detection/3_coco.json"
-output_dir = "D:/2025/detection/3_annot_voc/"
+#ann_file = "D:/2025/detection/3_coco.json"
+#output_dir = "D:/2025/detection/3_annot_voc/"
+
+ann_file = "C:/BP/species/annot_tester.json"
+output_dir = "C:/BP/species/parent_voc/"
 
 def coco2voc(ann_file, output_dir):
     coco = COCO(ann_file)
@@ -44,3 +47,4 @@ def coco2voc(ann_file, output_dir):
                 writer.save(output_dir+'/'+ basename)
 
 coco2voc(ann_file=ann_file, output_dir= output_dir)
+
