@@ -1,24 +1,37 @@
 import torch
+from torch.cpu.amp import autocast
+from torch.cuda.amp import GradScaler
 from tqdm import tqdm
 val_acc = []
 val_losses = []
+
+#scaler = GradScaler()
 
 def test(model, test_loader, device, criterion):
     model.eval()
     running_loss = 0
     correct = 0
     total = 0
+    total = 0
 
     with torch.no_grad():
         for images, labels in test_loader:
-            images, labels = images.to(device), labels.to(device)
+        #    if use_amp:
+         #       with autocast():
+          #          images, labels = images.to(device), labels.to(device)
+                    # images = images.half()
+           #         outputs = model(images)
+              #      val_loss = criterion(outputs, labels)
 
+            #else:
+            images, labels = images.to(device), labels.to(device)
             outputs = model.forward(images)
             val_loss = criterion(outputs, labels)
-            running_loss += val_loss.item()
-            _, predicted = outputs.max(1)
-            total += labels.size(0)
-            correct += predicted.eq(labels).sum().item()
+
+        running_loss += val_loss.item()
+        _, predicted = outputs.max(1)
+        total += labels.size(0)
+        correct += predicted.eq(labels).sum().item()
         #   early_stopping = EarlyStopping(tolerance=0.3, min_delta=0.3) ### early stopping, as needed
 
     val_loss = running_loss / len(test_loader)

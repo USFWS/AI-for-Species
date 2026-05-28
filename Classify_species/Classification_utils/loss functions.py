@@ -1,9 +1,9 @@
 
 import numpy as np
 
-class_counts = np.bincount(train_dataset.annotations.species_cat)
+class_counts = np.bincount(train_dataset.annotations.WHCR_cat)
 num_classes = len(class_counts)
-total_samples = len(train_dataset.annotations.species_cat)
+total_samples = len(train_dataset.annotations.WHCR_cat)
 
 class_weights = []
 

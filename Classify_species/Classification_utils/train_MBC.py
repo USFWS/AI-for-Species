@@ -1,7 +1,5 @@
 from tqdm import tqdm
-import torch
-import torch.optim as optim
-from torch.optim import lr_scheduler
+
 # Training model first
 train_acc = []
 train_losses = []
@@ -14,8 +12,9 @@ def train (epoch, model, train_loader, device, optimizer, criterion):
     total = 0
     for images, labels in tqdm(train_loader):
         images, labels = images.to(device), labels.to(device)
-
-        optimizer.zero_grad()
+       # optimizer.zero_grad() replaced by code below
+        for param in model.parameters():
+            param.grad= None
         outputs = model.forward(images)
         train_loss = criterion(outputs, labels)
 
