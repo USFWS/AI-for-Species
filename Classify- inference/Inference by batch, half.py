@@ -7,6 +7,8 @@ import torch
 import csv
 import time
 
+# To do inference with 32-bit precision, comment out lines 27 model.half()
+# and line 91   images = images.half()
 batch_size= 67
 
 image_source = main_dir = "E:/R2_waterfowl/timer_img/demo/"
@@ -135,26 +137,10 @@ if __name__ == "__main__":
               unique_BB = img_name[i]
               # img_name = img_name[2]
 
-              print("corect", unique_BB, label1a, label2a, label3a, score1a, score2a, score3a)
+              print("correct", unique_BB, label1a, label2a, label3a, score1a, score2a, score3a)
               with open(new_csv, 'a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow([unique_BB, label1a, label2a, label3a, score1a, score2a, score3a])
-
-
-          #fields = ['name', 'score1', 'score2', 'score3', 'label1', 'label2', 'label3']
-          #dict_record = {'name': img_name, 'score1': score1, 'score2': score2, 'score3': score3, 'label1': label1,
-          # 'label2': label2, 'label3': label3}
-          #for name, score1, score2, score3, label1, label2, label3 in zip(img_name, score1, score2,
-          #score3, label1, label2, label3):
-          #dict1.update({dict_record})
-
-          #print(dict_record)
-
-        #    writer = csv.DictWriter(new_csv, fieldnames=fields)
-         #   writer.writerow(dict1)
-
-
-
 
 time_end = time.time()
 duration_sec = time_end - time_start
