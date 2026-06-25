@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import json
-
+import config
 # Inputs: working_dir= working directory, filename = name of coco json file that needs converted ;
 # final_csv = output csv file
 # The output csv will not contain images without annotations; to obtain those, please check the output of
@@ -9,7 +9,7 @@ import json
 
 working_dir = "C:/BP/species/"
 filename = "new_test_annot.json"
-final_csv = "reversed.csv"
+new_csv = config.NEW_CSV
 
 # Set working directory
 os.chdir(working_dir)
@@ -83,4 +83,4 @@ csv_data = pd.read_csv(csv_data)
 # Merge
 merge1 = csv_data.merge(csv_names, left_on= 'image_id', right_on = 'image_id' )
 #print (merge1)
-merge1.to_csv(final_csv, index=False)
+merge1.to_csv(new_csv, index=False)
