@@ -7,7 +7,7 @@ import config
 # The output csv will not contain images without annotations; to obtain those, please check the output of
 # "...names_toCSV" file
 
-working_dir = "C:/BP/species/"
+working_dir = config.WORKING_DIR
 filename = "new_test_annot.json"
 new_csv = config.NEW_CSV
 
