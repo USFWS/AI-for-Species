@@ -6,6 +6,8 @@ import tqdm
 from tqdm import tqdm
 import glob
 
+import config
+
 
 def tile_img(image_path, output_folder,tile_size=800, overlap=200, output_widget=None, zip_output=None):
     """
@@ -97,11 +99,11 @@ def tile_img(image_path, output_folder,tile_size=800, overlap=200, output_widget
 ##
 tile_size = 1024
 overlap = 0
-output_folder= "D:/species_2025/12_species_detection/g_inference/4_new_tiles/"
+export_dir = config.EXPORT_DIR
 
 source_dir = glob.glob("D:/species_2025/12_species_detection/g_inference/4_new_parents/*.jpg")
 
 for images in source_dir:
     image_path = images
     print(image_path)
-    tile_img(image_path, output_folder, tile_size, overlap)
+    tile_img(image_path, export_dir, tile_size, overlap)

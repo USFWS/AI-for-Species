@@ -4,9 +4,11 @@ import cv2 as cv
 import os
 from PIL import Image, ImageDraw, ImageFont
 
+import config
+
 ##Input: path = dir with parent images; csv_data = detection csv from inference
 # export_path_[bird/nonbird/artif] = specify folders for each class
-source_img = "C:/Brad/a_detection_of_seabirds/tiles_label2_birds/"
+source_img = config.SOURCE_IMG
 annot_data = pandas.read_csv("C:/Brad/a_detection_of_seabirds/annot not reviewed2.csv")
 export_path_bird = "C:/Brad/a_detection_of_seabirds/tiles_w_boxes/"
 
