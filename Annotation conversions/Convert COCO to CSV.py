@@ -8,7 +8,7 @@ import config
 # "...names_toCSV" file
 
 working_dir = config.WORKING_DIR
-filename = "new_test_annot.json"
+json_input = config.JSON_INPUT
 new_csv = config.NEW_CSV
 
 # Set working directory
@@ -53,8 +53,8 @@ def convert_coco_json_to_csv(filename):
 
 ## STEP 2- EXPORT CSV WITH IMAGE NAMES, IMAGE ID NUMBERS
 def convert_coco_names_to_csv(csv_file):
-    s = json.load(open(filename, 'r'))  # read & parse JSON string and convert it to a Python Dictionary
-    out_file = filename[:-5]
+    s = json.load(open(json_input, 'r'))  # read & parse JSON string and convert it to a Python Dictionary
+    out_file = json_input[:-5]
     out2 = open(out_file + '_names_toCSV.csv', 'w')  # open for writing to file
     out2.write('image_id, unique_image_jpg \n')  #
 
@@ -69,11 +69,11 @@ def convert_coco_names_to_csv(csv_file):
         out2.write('{},{} \n'.format(id, unique_image_jpg))
 
 # Run functions to get 2 csv files
-convert_coco_json_to_csv(filename)
-convert_coco_names_to_csv(filename)
+convert_coco_json_to_csv(json_input)
+convert_coco_names_to_csv(json_input)
 
 # Read in; 1st, Erase extra image names at end of "data to csv" file
-prefix = filename[:-5]
+prefix = json_input[:-5]
 csv_names= ("".join([prefix,"_names_toCSV.csv"]))
 csv_data = ("".join([prefix,"_json_data_to_CSV.csv"]))
 

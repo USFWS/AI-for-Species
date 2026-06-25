@@ -5,14 +5,16 @@ import csv
 import numpy as np
 from sympy import factor
 
+import config
+
 os.chdir("D:/2025/detection/")
 
 # Inputs: csv_file= input of csv with annotation data;
 # export_json= name of COCO json to export
 # width = width of images (pixels), height = height of images (pixels)
 # categories = link the name of classes related to its index
-csv_file = '5_tile_annot_5perc_empty_train.csv'
-export_json = '5_tile_annot_5perc_empty_train.json'
+csv_file = config.CSV_DATA
+export_json = config.JSON_OUTPUT
 width = 1024
 height = 1024
 

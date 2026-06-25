@@ -5,7 +5,6 @@ from pycocotools.coco import COCO
 from pascal_voc_writer import Writer
 import argparse
 import os
-
 import config
 
 # Inputs
