@@ -1,20 +1,18 @@
 import pandas
 import cv2 as cv
 import os
+import config
 
 ##Input: image_path = dir with parent images; csv_data = detection csv from inference
 # export_path_[bird/nonbird/artif] = specify folders for each class
-image_path = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/FINAL_species_PARENTS_377/"
-
-#csv_data = pandas.read_csv("C:/users/bpickens/OneDrive - DOI/species_OneDrive/2025_known_species_individuals.csv")
-
-csv_data = pandas.read_csv("C:/users/bpickens/OneDrive - DOI/species_OneDrive/new_annot1.csv")
+source_img = config.SOURCE_IMG
+csv_data = pandas.read_csv(config.CSV_DATA))
 
 # crops with context exports
-export_context_bird = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/crops_context_2025/"
+export_context_bird = config.EXPORT_CONTEXT_BIRD
 
 # crops for inference
-export_infer_bird = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/crops_small_2025/"
+export_infer_bird = config.EXPORT_INFER_BIRD
 
 if not os.path.exists(export_context_bird):
     os.mkdir(export_infer_bird)
@@ -24,7 +22,7 @@ if not os.path.exists(export_infer_bird):
 #csv_data.columns = (['unique_image_jpg', 'class', 'score', 'xmin', 'ymin', 'w', 'h', 'unique_BB'])
 # print(csv_data)
 
-dirs = os.listdir(image_path)  # get all files in folder
+dirs = os.listdir(source_img)  # get all files in folder
 print("image path: ", len(dirs))
 
 # Get all of the image names without the path
@@ -38,7 +36,7 @@ matches = csv_data[csv_data['unique_image_jpg'].isin(file_list)]
 print("matches with csv: ", len(matches))
 
 for index, row in matches.iterrows():  ## iterrows: Pandas iterate over rows
-    source_path = image_path + row['unique_image_jpg']
+    source_path = source_img + row['unique_image_jpg']
     print("Source path: ", source_path)
     temp1 = cv.imread(source_path, cv.IMREAD_COLOR)  # this is good
 
@@ -94,6 +92,3 @@ for index, row in matches.iterrows():  ## iterrows: Pandas iterate over rows
     name2 = row['unique_BB'] # + ".jpg"
     print("dest2", name2)
     cv.imwrite(export_infer_bird + name2 , crops, [int(cv.IMWRITE_JPEG_QUALITY), 95])
-
-
-
