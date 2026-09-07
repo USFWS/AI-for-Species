@@ -10,6 +10,7 @@ import torchvision
 from torch.utils.data import DataLoader
 import torch.utils
 from torchvision import transforms, models
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
 torch.set_printoptions(edgeitems=2)
 # torch.manual_seed(123)
 import numpy as np
@@ -30,6 +31,25 @@ image_folder = "H:/WHCR_2025/1_classify/crops_small_2025/"
 model_save ='H:/WHCR_2025/1_classify/whcr_classify_swin_s_v6_2026_temp temp temp.pt'
 
 start_time = time.time()
+========
+from torch.optim import lr_scheduler
+torch.set_printoptions(edgeitems=2)
+# torch.manual_seed(123)
+import numpy as np
+
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
+use_cuda = torch.cuda.is_available()
+if device:
+    print(torch.cuda.get_device_name())
+
+# Inputs
+csv_train = "D:/species_2025/n_.csv"
+csv_test = "D:/species_2025/"
+image_folder = "D:/species_2025//"
+
+import Classification_utils
+from Classification_utils import train_MBC, test_MBC
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py
 
 # Valdiation model 2nd
 val_losses = []
@@ -55,7 +75,11 @@ class CustomTrain(torch.utils.data.Dataset):  ## used for custom data loading
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
                             "SACR": 13, "WHCR": 14, "ROSP": 15
+========
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile":16
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py
                             }
     def __len__(self):
         return len(self.annotations)
@@ -85,8 +109,14 @@ class CustomDataset(torch.utils.data.Dataset):  ## used for custom data loading
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
                             "SACR": 13, "WHCR": 14, "ROSP": 15
                             }
+========
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile":16
+                            }
+
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py
     def __len__(self):
         return len(self.annotations)
 
@@ -108,10 +138,17 @@ test_dataset = CustomDataset(csv_path=csv_test, image_folder=image_folder, trans
 y = len(test_dataset)
 print("Test dataset: ", y)
 
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
 class_counts = np.bincount(train_dataset.annotations.cat)
 print ("class counts: ", class_counts)
 num_classes = len(class_counts)
 total_samples = len(train_dataset.annotations.cat)
+========
+class_counts = np.bincount(train_dataset.annotations.family_cat)
+print ("class counts: ", class_counts)
+num_classes = len(class_counts)
+total_samples = len(train_dataset.annotations.family_cat)
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py
 class_weights = []
 
 for count in class_counts:
@@ -120,9 +157,15 @@ for count in class_counts:
 
 class_weights = torch.FloatTensor(class_weights)
 class_weights[14] = class_weights[14]*10
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
 
 class_weights = class_weights.to(device1)
 print("WHCR weight: ", class_weights[14])
+========
+class_weights[16] = class_weights[16]*10
+class_weights = class_weights.to(device)
+print("species weight: ", class_weights[14])
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py
 
 class FocalLoss(nn.Module):
     def __init__(self, alpha=None, gamma=2):
@@ -136,14 +179,20 @@ class FocalLoss(nn.Module):
         loss = (self.alpha[targets]*(1-pt) ** self.gamma* ce_loss).mean()
         return loss
 
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, pin_memory=True)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, pin_memory=True)
+========
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py
 
 # Load a pretrained transformer model
 # Available models: swin_s, swin_t
 #model = torch.load ("I:/Saved_models_weights/swin_s.pth")
 from torchvision.models import swin_s, swin_t, swin_b, maxvit_t, maxvit, swin_v2_t, swin_v2_s
 
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
 ######################
 ####################
 ####################
@@ -156,6 +205,15 @@ print(model)
 ########################
 #############
 ################
+========
+## Swin models
+weights = torchvision.models.Swin_S_Weights.IMAGENET1K_V1
+model = models.swin_s(weights= weights)
+
+# Maxvit_t
+#weights = torchvision.models.MaxVit_T_Weights.IMAGENET1K_V1
+#model = models.maxvit_t (weights= weights)
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py
 
 # Vit
 #weights = torchvision.models.ViT_B_32_Weights.IMAGENET1K_V1
@@ -176,6 +234,7 @@ model.fc = nn.Sequential(# nn.Linear(2048,512), ##Resent50 only
                          nn.ReLU(),
                          nn.Linear(250, 125),
                          nn.ReLU(),
+<<<<<<<< HEAD:Classify- train, test/Classify_train, test_15class- part1_half.py
                          nn.Linear(125,16),
                          nn.Softmax(dim=1))
 model.to(device1)
@@ -221,3 +280,23 @@ model_half = model.half()
 model_scripted_half = torch.jit.script(model_half)
 model_scripted_half.save(model_save)
 
+========
+                         nn.Linear(125,15),
+                         nn.Softmax(dim=1))
+model.to(device)
+################
+# criterion = nn.CrossEntropyLoss()
+criterion = FocalLoss(alpha=class_weights, gamma=2)
+n_epoch = 8
+#optimizer = optim.SGD(model.parameters(),lr= 0.001, momentum = 0.90) ##0.001 good start
+optimizer = optim.Adam (model.parameters(), lr= 0.00001)
+
+
+for epoch in range(1,n_epoch+1):
+    Classification_utils.train_MBC.train(epoch, model, train_loader, device=device, optimizer=optimizer, criterion=criterion)
+    Classification_utils.test_MBC.test(epoch, model, test_loader, device=device, optimizer=optimizer, criterion=criterion)
+
+# export model and weights
+model_scripted = torch.jit.script(model)
+model_scripted.save('C:/users/aware/desktop/2025_Apri9_seabird_family_swin_s_scripted1.pt')
+>>>>>>>> origin/main:Classify- train, test/Classify_train, test- part1.py

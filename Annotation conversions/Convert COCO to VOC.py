@@ -5,6 +5,7 @@ from pycocotools.coco import COCO
 from pascal_voc_writer import Writer
 import argparse
 import os
+import config
 
 # Inputs
 ## ann_file = COCO annotation json
@@ -13,7 +14,7 @@ import os
 #output_dir = "D:/2025/detection/3_annot_voc/"
 
 ann_file = "C:/BP/species/annot_tester.json"
-output_dir = "C:/BP/species/parent_voc/"
+export_dir = config.EXPORT_DIR
 
 def coco2voc(ann_file, output_dir):
     coco = COCO(ann_file)
@@ -46,5 +47,4 @@ def coco2voc(ann_file, output_dir):
                 print("basename:", basename)
                 writer.save(output_dir+'/'+ basename)
 
-coco2voc(ann_file=ann_file, output_dir= output_dir)
-
+coco2voc(ann_file=ann_file, output_dir= export_dir)

@@ -10,6 +10,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score, balanced_accuracy_
 import numpy
 import seaborn as sns
 import matplotlib.pyplot as plt
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
 import time
 
 import config
@@ -28,16 +29,34 @@ classification_report = model_name + "_prediction_report.csv"
 raw_confusion_matrix = model_name + "_raw_conf_matrix.csv"
 normalized_confusion_matrix = model_name+ "_normal_conf_matrix.csv"
 confusion_matrix_png = model_name + "_normal_conf_matrix_pic.png"
+========
+
+model_path = "D:/species_2025/model_weights/species_classifier_Aug22_swin_s_rd3.pt"
+
+model_name = "species_rd4_test_dataset"
+
+# Inputs
+csv_test = "D:/species_2025/6_classify/DATASETS/rd4_dataset/test_dataset.csv"
+image_folder = "D:/species_2025/6_classify/DATASETS/rd4_dataset/test_dataset_crops/"
+
+classification_report = "D:/species_2025/6_classify/DATASETS/rd4_dataset/" + model_name + "_prediction_report .csv"
+raw_confusion_matrix = "D:/species_2025/6_classify/DATASETS/rd4_dataset/" + model_name + "_raw_conf_matrix.csv"
+normalized_confusion_matrix = "D:/species_2025/6_classify/DATASETS/rd4_dataset/" + model_name + "_normal_conf_matrix.csv"
+confusion_matrix_png = "D:/species_2025/6_classify/DATASETS/rd4_dataset/" + model_name + "_normal_conf_matrix_pic.png"
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
 
 ###########
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(f"Using {device} device") # must print "Using cuda device" to work
 
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
 if not os.path.exists(model_name):
     os.mkdir(model_name)
 
 start_time = time.time()
 
+========
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
 class2index = {"Accipitridae": 0, "Anatidae": 1, "Ardeidae": 2,
                             "artificial": 3, "Charadriiformes": 4,
                             "Laridae": 5, "Pelecanidae": 6,
@@ -45,7 +64,11 @@ class2index = {"Accipitridae": 0, "Anatidae": 1, "Ardeidae": 2,
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
                             "SACR": 13, "WHCR": 14, "ROSP": 15
+========
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile": 16
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
                             }
 # load model
 model = torch.jit.load(model_path)
@@ -64,7 +87,11 @@ class CustomDataset(torch.utils.data.Dataset):  ## used for custom data loading
                             "Skimmer": 9,
                             "Sterninae": 10,
                             "Threskiornithidae": 11, "Unlisted_object": 12,
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
                             "SACR": 13, "WHCR_adult": 14, "ROSP": 15
+========
+                            "SACR": 13, "species_adult": 14, "ROSP": 15, "species_juvenile": 16
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
                             }
     def __len__(self):
         return len(self.annotations)
@@ -93,13 +120,19 @@ print("test dataset: ", y)
 test_loader2 = DataLoader(test_dataset, shuffle=False)
 
 test_pred_list = []
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
 x=0
+========
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
 
 with torch.no_grad():
     model.eval()
     for images, labels in test_loader2:
         images, labels = images.to(device), labels.to(device)
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
         images = images.half()
+========
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
         test_pred = model.forward(images)
 
         _, test_pred_classes = torch.max(test_pred, dim=1)
@@ -107,8 +140,11 @@ with torch.no_grad():
         probs = torch.softmax(test_pred, dim=1)
         preds = probs.argmax(dim=1)
         test_pred_list.append(test_pred_classes.cpu().numpy())
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
         x = x + 1
         print("Classified: ", x)
+========
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
 
 # below are class index predictions
 test_pred_list = [a.squeeze().tolist() for a in test_pred_list]
@@ -123,6 +159,7 @@ bal_score = balanced_accuracy_score(label_truth, test_pred_list)
 print("Overal accuracy is: ", score)
 print("Balanced accuracy is: ", bal_score)
 
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
 print("Start time: ", start_time)
 end_time = time.time()
 duration_min = (end_time - start_time)/60
@@ -133,6 +170,8 @@ print("duration (seconds): ", duration_sec)
 print("duration (minutes): ", duration_min)
 print("duration (hours): ",duration_hrs)
 
+========
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
 # label_truth = [a.squeeze().tolist() for a in label_list]
 
 # Read in class indices
@@ -156,10 +195,17 @@ class_list = list(class2index.keys())
 cm.to_csv(raw_confusion_matrix, header= class_list)
 
 # Normalized confusion matrix
+<<<<<<<< HEAD:Classify- train, test/Classify train, test _15class- part2_half.py
 cm_normalized = sklearn.metrics.confusion_matrix(label_truth, test_pred_list, labels = class_index, normalize = "true")
 cm_normalized = pandas.DataFrame(cm_normalized).transpose()
 class_list = list(class2index.keys())
 cm_normalized.to_csv(normalized_confusion_matrix, header= class_list)
+========
+report1 = sklearn.metrics.confusion_matrix(label_truth, test_pred_list, labels = class_index, normalize = "true")
+df = pandas.DataFrame(report1).transpose()
+class_list = list(class2index.keys())
+cm.to_csv(normalized_confusion_matrix, header= class_list)
+>>>>>>>> origin/main:Classify- train, test/Classify train, test - part2.py
 
 # Plot confusion matrix
 label_list = []

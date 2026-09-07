@@ -2,11 +2,13 @@ import pandas
 import cv2 as cv
 import os
 
+import config
+
 ##Input: path = dir with parent images; csv_data = detection csv from inference
 # export_path_[bird/nonbird/artif] = specify folders for each class
-path = "D:/R2_species_2025/1_parent_images/" #JPG_20250122_095400/"
-csv_data = pandas.read_csv("D:/R2_species_2025/YOLO10_detection_results_April15.csv")
-export_path_bird = "D:/R2_species_2025/3_crops_all_inference/bird_crops_w_context/"
+path = config.SOURCE_IMG
+csv_data = pandas.read_csv(config.CSV_DATA)
+export_path_bird = config.EXPORT_CONTEXT_BIRD
 #export_path_nonbird = "D:/detection_crops_for_inference_2024/2024_Jan5_nonbird_crops/"
 #export_path_artif = "D:/detection_crops_for_inference_2024/2024_Jan5_artif_crops/"
 
@@ -14,7 +16,6 @@ if not os.path.exists(export_path_bird):
     os.mkdir(export_path_bird)
 
 # csv_data.columns = (['class', 'score', 'xmin', 'ymin', 'w', 'h', 'unique_image_jpg', 'unique_BB'])
-
 
 for root, dirs, files in os.walk(path):
 #for files in dirs:

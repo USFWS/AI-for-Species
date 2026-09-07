@@ -4,6 +4,8 @@ from pycocotools.coco import COCO
 from pascal_voc_writer import Writer
 import os
 
+import config
+
 os.chdir("C:/users/bpickens/OneDrive - DOI/species_OneDrive/detection/")
 
 # Inputs:
@@ -12,9 +14,9 @@ os.chdir("C:/users/bpickens/OneDrive - DOI/species_OneDrive/detection/")
 # output_dir = dir for voc annotations
 # width = width of images (pixels), height = height of images (pixels)
 # categories = link the name of classes related to its index
-csv_file = 'annot_add_to_train2.csv'
-export_json = 'new_annot2.json'
-output_dir = "C:/users/bpickens/OneDrive - DOI/species_OneDrive/detection/voc_parents/"
+csv_file = config.CSV_DATA
+json_output = config.JSON_OUTPUT
+export_dir = config.EXPORT_DIR
 width = 6464
 height = 4848
 
@@ -86,7 +88,7 @@ data_coco["images"] = images2
 data_coco["categories"] = categories
 data_coco["annotations"] = annotations
 
-json.dump(data_coco, open(export_json,"w"), indent=0)
+json.dump(data_coco, open(json_output, "w"), indent=0)
 print ("Completed!")
 
 ##########
@@ -122,4 +124,4 @@ def coco2voc(ann_file, output_dir):
                 print("basename:", basename)
                 writer.save(output_dir+'/'+ basename)
 
-coco2voc(ann_file=export_json, output_dir= output_dir)
+coco2voc(ann_file=json_output, output_dir= export_dir)
