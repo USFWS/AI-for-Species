@@ -2,19 +2,15 @@ import os
 import pandas
 from os.path import basename
 import shutil
+import config
 
 ## New inputs: drive_path = root directory, flight_name = flight folder, model_path = model to apply
-root_path = "D:/species_2025/"
-flight_name = "3_crops_all_inference"
+root_path = config.EXPORT_DIR
+csv_data = config.CSV_DATA
 
-csv_data = "D:/species_2025/3_crops_all_inference/classify_127k_rd2.csv"
-# csv_data = root_path + flight_name + "/classify_" + flight_name + ".csv"
-csv_data = pandas.read_csv(csv_data)
-print(csv_data)
-
-root_export = root_path + flight_name + "/classification_results/"
-image_dir = root_path + flight_name + "/crops_birds_infer_127k/"
-image_context = root_path + flight_name + "/bird_crops_w_context/"
+root_export = root_path + "/classification_results/"
+image_dir = config.SOURCE_IMG
+image_context = config.EXPORT_CONTEXT_BIRD
 
 prob_threshold = 1.0
 
